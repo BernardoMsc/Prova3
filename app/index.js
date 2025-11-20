@@ -1,0 +1,14 @@
+import { useState } from "react";
+import { View, Text, Button } from "react-native";
+import { Link } from "expo-router";
+
+export default function Home() {
+
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: 12 }}>
+      <Link href="/gameVault" asChild>
+        <Button title="Jogos" />
+      </Link>
+    </View>
+  );
+}
