@@ -110,16 +110,13 @@ export default function Games() {
 
     async function filtrar(q) {
         setSearch(q);
-
         if (!q.trim()) {
             await carregarGames();
             return;
         }
-
         const lista = await buscar(q);
         setGames(lista);
     }
-
     useEffect(() => {
         carregarGames();
     }, []);
@@ -153,7 +150,7 @@ export default function Games() {
             />
 
             <TextInput
-                placeholder="Buscar jogo..."
+                placeholder="Buscar jogo"
                 value={search}
                 onChangeText={filtrar}
                 style={estilos.input}
