@@ -44,12 +44,20 @@ async function apaga(game_id) {
     return resposta.ok;
 }
 
+async function buscar(q) {
+    const resposta = await fetch(`http://177.44.248.50:8080/games/search?q=${q}`);
+    if (resposta.ok) {
+        return await resposta.json();
+    }
+}
+
 export default function Games() {
     const [title, setTitle] = useState("");
     const [slug, setSlug] = useState("");
     const [price, setPrice] = useState("");
     const [platform, setPlatform] = useState("");
     const [games, setGames] = useState([]);
+    const [search, setSearch] = useState("");
     const [editingId, setEditingId] = useState(null);
 
     async function carregarGames() {
@@ -100,6 +108,18 @@ export default function Games() {
         if (ok) await carregarGames();
     }
 
+    async function filtrar(q) {
+        setSearch(q);
+
+        if (!q.trim()) {
+            await carregarGames();
+            return;
+        }
+
+        const lista = await buscar(q);
+        setGames(lista);
+    }
+
     useEffect(() => {
         carregarGames();
     }, []);
@@ -129,6 +149,13 @@ export default function Games() {
                 keyboardType="numeric"
                 value={price}
                 onChangeText={setPrice}
+                style={estilos.input}
+            />
+
+            <TextInput
+                placeholder="Buscar jogo..."
+                value={search}
+                onChangeText={filtrar}
                 style={estilos.input}
             />
 
